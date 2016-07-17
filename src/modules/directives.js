@@ -30,7 +30,7 @@ Directives.preprocessing = function(obj, line) {
       }
     });
 
-    obj.diretives = directives;
+    obj.directives = directives;
   }
 };
 

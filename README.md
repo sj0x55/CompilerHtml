@@ -28,7 +28,7 @@ console.log(JSON.stringify(result, null, 2));
 [
   {
     "openTagName": "div",
-    "diretives": [],
+    "directives": [],
     "attributes": [
       {
         "name": "directive1"
@@ -41,7 +41,7 @@ console.log(JSON.stringify(result, null, 2));
   },
   {
     "openTagName": "div",
-    "diretives": [],
+    "directives": [],
     "attributes": [
       {
         "name": "directive2"
@@ -50,7 +50,7 @@ console.log(JSON.stringify(result, null, 2));
   },
   {
     "openTagName": "div",
-    "diretives": [],
+    "directives": [],
     "attributes": [
       {
         "name": "class",
@@ -66,7 +66,7 @@ console.log(JSON.stringify(result, null, 2));
   },
   {
     "openTagName": "div",
-    "diretives": [],
+    "directives": [],
     "attributes": [
       {
         "name": "directive3"
