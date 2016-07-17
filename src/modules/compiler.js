@@ -5,8 +5,7 @@ export default Compiler;
  * @param {Object} conf
  * @return void
  */
-function Compiler(conf) {
-  conf = conf || {};
+function Compiler(conf = {}) {
   this.preprocessors = conf.preprocessors;
 }
 
