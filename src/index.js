@@ -3,11 +3,11 @@ import Tags from './modules/tags';
 import Directives from './modules/directives';
 import Attributes from './modules/attributes';
 
-Compiler({
+let compiler = new Compiler({
   preprocessors: [Tags, Directives, Attributes]
 });
 
-let result = Compiler.compile(`
+let result = compiler.compile(`
   <div a b test c="ccc">
     <div directive>
       <div class="div">Test 1</div>

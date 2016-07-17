@@ -28,6 +28,7 @@ module.exports = (function() {
       modulesDirectories: [
         'node_modules'
       ]
-    }
+    },
+    plugins: []
   };
 })();

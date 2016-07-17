@@ -1,15 +1,28 @@
 import Tags from './tags';
 
-export default {
-  preprocessing: function(obj, line) {
-    if (Tags.isTag(line) && !Tags.isEnding(line)) {
-      obj.attrs = extractAttributes(line);
-    }
-  },
-  extractAttributes: extractAttributes,
-  prepareAttribute: prepareAttribute
+export default Attributes;
+
+function Attributes() {}
+
+/**
+ * Extracted attributes from tag
+ *
+ * @param {Object} obj
+ * @param {String} line
+ * @return void
+ */
+Attributes.preprocessing = function(obj, line) {
+  if (Tags.isTag(line) && !Tags.isEnding(line)) {
+    obj.attributes = extractAttributes(line);
+  }
 };
 
+/**
+ * Extracted attributes from tag
+ *
+ * @param {String} line
+ * @return {Array}
+ */
 function extractAttributes(line) {
   let
     regex = /\s([a-z0-9\-]+(\=\"[a-z0-9\-\=\{\}\(\)\.\']+\")?)/ig,
@@ -17,12 +30,18 @@ function extractAttributes(line) {
     match;
 
   while (match = regex.exec(line)) {
-    matches.push(match[1]);
+    matches.push(prepareAttribute(match[1]));
   }
 
   return matches;
 }
 
+/**
+ * Convert string attribute to object
+ *
+ * @param {String} rawAttr
+ * @return {Object}
+ */
 function prepareAttribute(rawAttr) {
   let
     matches = rawAttr.split('='),
@@ -35,4 +54,13 @@ function prepareAttribute(rawAttr) {
   }
 
   return {name: name, value: value};
+}
+
+
+// Needs for test
+if (process.env.NODE_ENV) {
+  Attributes.privates = {
+    extractAttributes: extractAttributes,
+    prepareAttribute: prepareAttribute
+  };
 }

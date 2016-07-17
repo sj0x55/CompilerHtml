@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
+var karmaServer = require('karma').Server;
 
 gulp.task('default', []);
 
@@ -33,4 +34,11 @@ gulp.task('webpack-dev-server', function() {
     // Server listening
     gutil.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/index.html');
   });
+});
+
+gulp.task('test', function(done) {
+  new karmaServer({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
 });

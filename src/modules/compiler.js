@@ -1,59 +1,59 @@
 import Tags from './tags';
-
 export default Compiler;
 
 /**
- * Compiler module
- *
  * @param {Object} conf
  * @return void
  */
 function Compiler(conf) {
-  Compiler.preprocessors = conf.preprocessors;
+  conf = conf || {};
+  this.preprocessors = conf.preprocessors;
 }
 
 /**
- * Compile template extraxted all lines
- *
  * @param {String} template
  * @return {Object}
  */
-Compiler.compile = function(template) {
-  let lines = template && template.match(/(\<[^>]+\>)|[^><]+/ig);
+Compiler.prototype.compile = function compile(template) {
+  let lines = template && extractLines(template);
 
   if (lines) {
     lines = lines
       .map(line => clean(line))
       .filter(line => line);
 
-    return lines.length && translate(lines) || {};
+    return lines.length && translate(lines, this.preprocessors) || {};
   }
 };
+
+/**
+ * Extracted all single tags and line contents from template
+ *
+ * @param {String} template
+ * @return {Array}
+ */
+function extractLines(template) {
+  return template && template.match(/(\<[^>]+\>)|[^><]+/ig);
+}
 
 /**
  * Translate raw template lines to objects
  *
  * @param {Array} lines
+ * @param {Array} preprocessors
  * @return {Array}
  */
-function translate(lines) {
-  return lines.map((line) => preprocessingToObject(line));
-}
+function translate(lines, preprocessors) {
+  return lines.map((line) => {
+    let obj = {};
 
-/**
- * Translate a raw line templateused registered preprocessors
- *
- * @param {String} line
- * @return {Object}
- */
-function preprocessingToObject(line) {
-  let obj = {};
+    // Apply all preprocesors
+    if (preprocessors) preprocessors.forEach((preprocessor) => {
+      preprocessor.preprocessing(obj, line);
+    });
 
-  Compiler.preprocessors.forEach((preprocessor) => {
-    preprocessor.preprocessing(obj, line);
+    return obj;
   });
-
-  return obj;
 }
 
 /**
@@ -66,19 +66,11 @@ function clean(line) {
   return line && line.trim() || null;
 }
 
-// TODO Needs later
-// function searchTagEnding(tags, tag, startFrom) {
-//   let nestingLevel = 0;
-//   let endingTagIndex;
-//   let searchedTagName = Tag.extractTagName(tag);
-//
-//   for (let i = startFrom; i < tags.length; i++) {
-//     let processedTagName = Tag.extractTagName(tags[i]);
-//
-//     if (searchedTagName === processedTagName) {
-//       nestingLevel++;
-//     } else if ('/'.concat(searchedTagName) === processedTagName && --nestingLevel === 0) {
-//       return i;
-//     }
-//   }
-// }
+// Needs for test
+if (process.env.NODE_ENV) {
+  Compiler.privates = {
+    extractLines: extractLines,
+    translate: translate,
+    clean: clean
+  };
+}
