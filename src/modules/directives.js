@@ -25,10 +25,8 @@ Directives.preprocessing = function(obj, line) {
       directives = [];
 
     attrs.forEach((attr) => {
-      attr = Attributes.prepareAttribute(attr);
-
       if (hasDirective(attr.name)) {
-        directives.push();
+        directives.push(attr.name);
       }
     });
 

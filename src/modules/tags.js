@@ -16,6 +16,8 @@ Tags.preprocessing = function(obj, line) {
     } else {
       obj.openTagName = extractTagName(line);
     }
+  } else {
+    obj.content = line;
   }
 };
 

@@ -8,19 +8,14 @@ let compiler = new Compiler({
 });
 
 let result = compiler.compile(`
-  <div a b test c="ccc">
-    <div directive>
-      <div class="div">Test 1</div>
-      <div>Test 2</div>
-      <div>
-        Test 3
-        <div directive directive2 ddd_ddd class="abc"></div>
+  <div directive1 class="test1">
+    <div directive2>
+      <div class="div">
+        Test 1
       </div>
-    </div>
-    <div>
-      <div directive></div>
+      <div directive3 class="test2"></div>
     </div>
   </div>
 `);
 
-console.log(result);
+console.log(JSON.stringify(result, null, 2));

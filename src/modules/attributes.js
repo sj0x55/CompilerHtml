@@ -13,7 +13,7 @@ function Attributes() {}
  */
 Attributes.preprocessing = function(obj, line) {
   if (Tags.isTag(line) && !Tags.isEnding(line)) {
-    obj.attributes = extractAttributes(line);
+    obj.attributes = this.extractAttributes(line);
   }
 };
 
@@ -23,18 +23,18 @@ Attributes.preprocessing = function(obj, line) {
  * @param {String} line
  * @return {Array}
  */
-function extractAttributes(line) {
+Attributes.extractAttributes = function(line) {
   let
     regex = /\s([a-z0-9\-]+(\=\"[a-z0-9\-\=\{\}\(\)\.\']+\")?)/ig,
     matches = [],
     match;
 
   while (match = regex.exec(line)) {
-    matches.push(prepareAttribute(match[1]));
+    matches.push(this.prepareAttribute(match[1]));
   }
 
   return matches;
-}
+};
 
 /**
  * Convert string attribute to object
@@ -42,9 +42,9 @@ function extractAttributes(line) {
  * @param {String} rawAttr
  * @return {Object}
  */
-function prepareAttribute(rawAttr) {
+Attributes.prepareAttribute = function(rawAttr) {
   let
-    matches = rawAttr.split('='),
+    matches = rawAttr && rawAttr.split('='),
     name,
     value;
 
@@ -54,13 +54,10 @@ function prepareAttribute(rawAttr) {
   }
 
   return {name: name, value: value};
-}
+};
 
 
 // Needs for test
 if (process.env.NODE_ENV) {
-  Attributes.privates = {
-    extractAttributes: extractAttributes,
-    prepareAttribute: prepareAttribute
-  };
+  Attributes.privates = {};
 }
