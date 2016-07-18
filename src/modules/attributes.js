@@ -58,6 +58,6 @@ Attributes.prepareAttribute = function(rawAttr) {
 
 
 // Needs for test
-if (process.env.NODE_ENV) {
+if (process.env.NODE_ENV === 'test') {
   Attributes.privates = {};
 }

@@ -66,7 +66,7 @@ function clean(line) {
 }
 
 // Needs for test
-if (process.env.NODE_ENV) {
+if (process.env.NODE_ENV === 'test') {
   Compiler.privates = {
     extractLines: extractLines,
     translate: translate,

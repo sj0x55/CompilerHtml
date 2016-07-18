@@ -45,7 +45,7 @@ function hasDirective(directive) {
 }
 
 // Needs for test
-if (process.env.NODE_ENV) {
+if (process.env.NODE_ENV === 'test') {
   Directives.privates = {
     hasDirective: hasDirective
   };

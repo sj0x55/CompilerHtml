@@ -54,7 +54,7 @@ function extractTagName(line) {
 
 
 // Needs for test
-if (process.env.NODE_ENV) {
+if (process.env.NODE_ENV === 'test') {
   Tags.privates = {
     extractTagName: extractTagName
   };
