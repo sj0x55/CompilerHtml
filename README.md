@@ -5,8 +5,14 @@ import Tags from './modules/tags';
 import Directives from './modules/directives';
 import Attributes from './modules/attributes';
 
+Directives.setDirectives([
+  'test',
+  'directive1',
+  'directive2'
+]);
+
 let compiler = new Compiler({
-  preprocessors: [Tags, Directives, Attributes]
+  preprocessors: [Tags, Attributes, Directives]
 });
 
 let result = compiler.compile(`
@@ -28,7 +34,6 @@ console.log(JSON.stringify(result, null, 2));
 [
   {
     "openTagName": "div",
-    "directives": [],
     "attributes": [
       {
         "name": "directive1"
@@ -37,26 +42,31 @@ console.log(JSON.stringify(result, null, 2));
         "name": "class",
         "value": "test1"
       }
+    ],
+    "directives": [
+      "directive1"
     ]
   },
   {
     "openTagName": "div",
-    "directives": [],
     "attributes": [
       {
         "name": "directive2"
       }
+    ],
+    "directives": [
+      "directive2"
     ]
   },
   {
     "openTagName": "div",
-    "directives": [],
     "attributes": [
       {
         "name": "class",
         "value": "div"
       }
-    ]
+    ],
+    "directives": []
   },
   {
     "content": "Test 1"
@@ -66,7 +76,6 @@ console.log(JSON.stringify(result, null, 2));
   },
   {
     "openTagName": "div",
-    "directives": [],
     "attributes": [
       {
         "name": "directive3"
@@ -75,7 +84,8 @@ console.log(JSON.stringify(result, null, 2));
         "name": "class",
         "value": "test2"
       }
-    ]
+    ],
+    "directives": []
   },
   {
     "closeTagName": "div"

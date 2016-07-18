@@ -3,8 +3,14 @@ import Tags from './modules/tags';
 import Directives from './modules/directives';
 import Attributes from './modules/attributes';
 
+Directives.setDirectives([
+  'test',
+  'directive1',
+  'directive2'
+]);
+
 let compiler = new Compiler({
-  preprocessors: [Tags, Directives, Attributes]
+  preprocessors: [Tags, Attributes, Directives]
 });
 
 let result = compiler.compile(`

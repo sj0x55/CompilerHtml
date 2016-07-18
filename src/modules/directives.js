@@ -2,13 +2,6 @@ import Tags from './tags';
 import Attributes from './attributes';
 export default Directives;
 
-
-// todo
-let registeredDirectives = [
-  'test',
-  'directive'
-];
-
 function Directives() {}
 
 /**
@@ -25,7 +18,7 @@ Directives.preprocessing = function(obj, line) {
       directives = [];
 
     attrs.forEach((attr) => {
-      if (hasDirective(attr.name)) {
+      if (hasDirective.call(this, attr.name)) {
         directives.push(attr.name);
       }
     });
@@ -35,18 +28,28 @@ Directives.preprocessing = function(obj, line) {
 };
 
 /**
+ * Set registered directives
+ *
+ * @param {Array} list
+ * @return void
+ */
+Directives.setDirectives = function(list) {
+  this.registeredDirectives = list;
+};
+
+/**
  * Needs to know if directive has been registered
  *
  * @param {String} directive
  * @return {Boolean}
  */
 function hasDirective(directive) {
-  return registeredDirectives.indexOf(directive) !== -1;
+  return this.registeredDirectives.indexOf(directive) !== -1;
 }
 
 // Needs for test
 if (process.env.NODE_ENV === 'test') {
   Directives.privates = {
-    hasDirective: hasDirective
+    hasDirective: hasDirective.bind(Directives)
   };
 }
